@@ -7,6 +7,7 @@ export const siteConfig = {
   yearsExperience: 10,
   nav: [
     { id: "services", href: "#services" },
+    { id: "propertyServices", href: "#property-services" },
     { id: "process", href: "#process" },
     { id: "testimonials", href: "#testimonials" },
     { id: "faq", href: "#faq" },

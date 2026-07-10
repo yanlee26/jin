@@ -3,6 +3,7 @@ export type Locale = "en" | "zh";
 export type TranslationSet = {
   nav: {
     services: string;
+    propertyServices: string;
     process: string;
     testimonials: string;
     faq: string;
@@ -19,6 +20,11 @@ export type TranslationSet = {
   };
   trust: { points: (years: number) => string[] };
   services: {
+    heading: string;
+    subheading: string;
+    items: { title: string; description: string }[];
+  };
+  propertyServices: {
     heading: string;
     subheading: string;
     items: { title: string; description: string }[];
@@ -83,31 +89,32 @@ export const translations: Record<Locale, TranslationSet> = {
   en: {
     nav: {
       services: "Services",
+      propertyServices: "Property Services",
       process: "Process",
       testimonials: "Testimonials",
       faq: "FAQ",
       contact: "Contact",
     },
     common: {
-      areaServed: "Auckland & North Island",
+      areaServed: "Auckland",
     },
     header: {
-      quoteButton: "Get a Free Quote",
+      quoteButton: "Book a Visit",
     },
     hero: {
       yearsSuffix: "years experience",
       tagline: "Nice paint work, done right.",
       description:
-        "Trusted residential and commercial painters serving Auckland and the North Island. Interior, exterior, fences and decks — free no-obligation quotes.",
-      quoteButton: "Get a Free Quote",
+        "Trusted residential and commercial painters serving Auckland. Interior, exterior, repairs, leaks and more — call us and we'll get it sorted.",
+      quoteButton: "Book a Visit",
       callButton: (phone: string) => `Call ${phone}`,
     },
     trust: {
       points: (years: number) => [
         `${years}+ years experience`,
-        "Auckland & North Island",
+        "Based in Auckland",
         "Fully insured team",
-        "Free no-obligation quotes",
+        "Straightforward pricing, no hassle",
       ],
     },
     services: {
@@ -142,21 +149,45 @@ export const translations: Record<Locale, TranslationSet> = {
         },
       ],
     },
+    propertyServices: {
+      heading: "Property Services",
+      subheading:
+        "We also handle the everyday repairs and upkeep that come with owning a property.",
+      items: [
+        {
+          title: "Doors, Windows & Trims",
+          description: "Renovation, repair and replacement for doors, windows and skirting boards.",
+        },
+        {
+          title: "Leak Repairs",
+          description: "Fixing leaks from doors, windows, exterior walls, gutters and roofs.",
+        },
+        {
+          title: "Pressure Washing",
+          description: "Driveways, permeable pavers, decks and fences cleaned and refreshed.",
+        },
+        {
+          title: "Grounds & Garden",
+          description:
+            "Artificial turf and gravel laying, land clearing, weeding and tree trimming.",
+        },
+      ],
+    },
     process: {
       heading: "How it works",
       subheading: "A simple, straightforward process from first contact to finished job.",
       steps: [
         {
           title: "Get in touch",
-          description: "Call, email or fill out the quote form with your project details.",
+          description: "Call, email or send us your details — whatever's easiest for you.",
         },
         {
-          title: "Free quote",
-          description: "We visit or discuss your job and provide a clear, no-obligation quote.",
+          title: "We assess the job",
+          description: "We take a look and give you a clear price on the spot — no back-and-forth.",
         },
         {
-          title: "We paint",
-          description: "Our team arrives on schedule and completes the work to a high standard.",
+          title: "We get to work",
+          description: "Our team arrives on schedule and completes the job to a high standard.",
         },
         {
           title: "Final walkthrough",
@@ -192,33 +223,32 @@ export const translations: Record<Locale, TranslationSet> = {
       heading: "Frequently asked questions",
       items: [
         {
-          question: "Do you offer free quotes?",
+          question: "How does pricing work?",
           answer:
-            "Yes — every quote is free and no-obligation. Get in touch with your project details and we'll get back to you.",
+            "We'll take a look at the job and give you a clear, straightforward price — no drawn-out quote process.",
         },
         {
           question: "What areas do you cover?",
-          answer: "We're based in Auckland and cover jobs across the wider North Island.",
+          answer: "We're based in Auckland.",
         },
         {
           question: "Are you insured?",
-          answer: "Yes, our team is fully insured for residential and commercial painting work.",
+          answer: "Yes, our team is fully insured for residential and commercial work.",
         },
         {
-          question: "How long have you been painting?",
-          answer: "We've been painting homes and businesses for over 10 years.",
+          question: "How long have you been in business?",
+          answer: "We've been working on homes and businesses for over 10 years.",
         },
         {
           question: "What services do you offer?",
           answer:
-            "Interior, exterior, residential, commercial painting, plus fences and decks. Get in touch if you don't see your job type listed.",
+            "Painting and decorating, plus repairs, leaks, gutters, pressure washing and general property maintenance. Get in touch if you don't see your job listed.",
         },
       ],
     },
     bookingForm: {
-      heading: "Get a free quote",
-      description:
-        "Tell us a bit about your project and we'll get back to you with a free, no-obligation quote.",
+      heading: "Book a Visit",
+      description: "Tell us what's going on and we'll get someone out to sort it.",
       fields: {
         name: "Full name",
         phone: "Phone",
@@ -235,9 +265,13 @@ export const translations: Record<Locale, TranslationSet> = {
         "Residential Painting",
         "Commercial Painting",
         "Fences & Decks",
+        "Doors & Windows",
+        "Leak Repair",
+        "Pressure Washing",
+        "Grounds & Garden",
         "Other",
       ],
-      submitButton: "Request my free quote",
+      submitButton: "Request a Visit",
       errors: {
         name: "Please enter your name.",
         phone: "Please enter a phone number.",
@@ -249,10 +283,10 @@ export const translations: Record<Locale, TranslationSet> = {
       success: {
         title: "Thanks — got it!",
         description: (email: string) =>
-          `Your email app should now be open with your quote request ready to send to ${email}. Just hit send.`,
+          `Your email app should now be open with your request ready to send to ${email}. Just hit send.`,
         sendAnother: "Send another request",
       },
-      subjectPrefix: "Free quote request",
+      subjectPrefix: "Service request",
       emailBody: {
         nameLabel: "Name",
         phoneLabel: "Phone",
@@ -270,31 +304,32 @@ export const translations: Record<Locale, TranslationSet> = {
   zh: {
     nav: {
       services: "服务项目",
+      propertyServices: "物业服务",
       process: "服务流程",
       testimonials: "客户评价",
       faq: "常见问题",
       contact: "联系我们",
     },
     common: {
-      areaServed: "奥克兰及北岛地区",
+      areaServed: "奥克兰",
     },
     header: {
-      quoteButton: "获取免费报价",
+      quoteButton: "预约上门",
     },
     hero: {
       yearsSuffix: "年经验",
       tagline: "专业刷漆，做到最好。",
       description:
-        "值得信赖的住宅与商业油漆团队，服务奥克兰及北岛地区。承接室内、室外、围栏与露台粉刷工程，提供免费无义务报价。",
-      quoteButton: "获取免费报价",
+        "值得信赖的住宅与商业油漆团队，服务奥克兰地区。承接室内、室外粉刷，维修、漏水处理等各类项目 — 联系我们，马上帮您搞定。",
+      quoteButton: "预约上门",
       callButton: (phone: string) => `致电 ${phone}`,
     },
     trust: {
       points: (years: number) => [
         `${years}年以上经验`,
-        "奥克兰及北岛地区",
+        "扎根奥克兰",
         "团队全额保险",
-        "免费无义务报价",
+        "价格透明，省心省力",
       ],
     },
     services: {
@@ -323,17 +358,39 @@ export const translations: Record<Locale, TranslationSet> = {
         },
       ],
     },
+    propertyServices: {
+      heading: "物业服务",
+      subheading: "我们也承接房屋日常维修与养护相关的各类项目。",
+      items: [
+        {
+          title: "门窗与地脚线",
+          description: "门窗、地脚线的翻新、维修与更换。",
+        },
+        {
+          title: "漏水维修",
+          description: "门窗漏水、外墙漏水、天沟漏水、屋顶漏水维修。",
+        },
+        {
+          title: "高压清洗",
+          description: "车道、透水砖、露台与围栏清洗焕新。",
+        },
+        {
+          title: "庭院养护",
+          description: "假草坪与碎石铺设、开荒除草、树枝修剪。",
+        },
+      ],
+    },
     process: {
       heading: "服务流程",
       subheading: "从初次联系到完工，流程简单明了。",
       steps: [
         {
           title: "联系我们",
-          description: "致电、发送邮件或填写报价表单，告诉我们您的项目详情。",
+          description: "致电、发送邮件或告诉我们您的详情 — 怎么方便怎么来。",
         },
         {
-          title: "免费报价",
-          description: "我们会实地查看或与您沟通项目详情，提供清晰、无义务的报价。",
+          title: "现场评估",
+          description: "我们会实地查看，当场给您明确报价，无需反复沟通。",
         },
         {
           title: "开始施工",
@@ -370,31 +427,31 @@ export const translations: Record<Locale, TranslationSet> = {
       heading: "常见问题",
       items: [
         {
-          question: "你们提供免费报价吗？",
-          answer: "是的 — 所有报价均为免费且无义务。请告诉我们您的项目详情，我们会尽快回复您。",
+          question: "价格是怎么定的？",
+          answer: "我们会实地查看后直接给您明确报价，无需漫长的比价流程。",
         },
         {
           question: "你们的服务范围是哪里？",
-          answer: "我们总部位于奥克兰，服务范围覆盖整个北岛地区。",
+          answer: "我们总部位于奥克兰。",
         },
         {
           question: "你们有保险吗？",
-          answer: "是的，我们的团队在住宅和商业粉刷工程中均享有全额保险。",
+          answer: "是的，我们的团队在住宅和商业工程中均享有全额保险。",
         },
         {
-          question: "你们从事粉刷行业多久了？",
-          answer: "我们已为住宅和企业提供粉刷服务超过10年。",
+          question: "你们做这行多久了？",
+          answer: "我们已为住宅和企业提供服务超过10年。",
         },
         {
           question: "你们提供哪些服务？",
           answer:
-            "室内、室外、住宅及商业粉刷，还有围栏与露台粉刷。如果没有看到您需要的项目类型，欢迎联系我们咨询。",
+            "室内外油漆装饰，以及维修、漏水处理、天沟、高压清洗与各类物业维护项目。如果没有看到您需要的服务，欢迎联系我们咨询。",
         },
       ],
     },
     bookingForm: {
-      heading: "获取免费报价",
-      description: "告诉我们您的项目详情，我们会尽快为您提供免费无义务报价。",
+      heading: "预约上门",
+      description: "告诉我们出了什么问题，我们会尽快安排人手上门处理。",
       fields: {
         name: "姓名",
         phone: "电话",
@@ -405,8 +462,19 @@ export const translations: Record<Locale, TranslationSet> = {
       },
       messagePlaceholder: "请描述您的项目详情...",
       selectPlaceholder: "请选择服务项目",
-      serviceOptions: ["室内粉刷", "室外粉刷", "住宅粉刷", "商业粉刷", "围栏与露台", "其他"],
-      submitButton: "提交免费报价申请",
+      serviceOptions: [
+        "室内粉刷",
+        "室外粉刷",
+        "住宅粉刷",
+        "商业粉刷",
+        "围栏与露台",
+        "门窗维修",
+        "漏水维修",
+        "高压清洗",
+        "庭院养护",
+        "其他",
+      ],
+      submitButton: "提交预约申请",
       errors: {
         name: "请输入您的姓名。",
         phone: "请输入电话号码。",
@@ -418,10 +486,10 @@ export const translations: Record<Locale, TranslationSet> = {
       success: {
         title: "谢谢，已收到！",
         description: (email: string) =>
-          `您的邮件应用应该已经打开，报价请求已准备好发送至 ${email}，点击发送即可。`,
+          `您的邮件应用应该已经打开，请求已准备好发送至 ${email}，点击发送即可。`,
         sendAnother: "再次提交请求",
       },
-      subjectPrefix: "免费报价申请",
+      subjectPrefix: "服务申请",
       emailBody: {
         nameLabel: "姓名",
         phoneLabel: "电话",

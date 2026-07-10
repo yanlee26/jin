@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import TrustStrip from "@/components/TrustStrip";
 import Services from "@/components/Services";
+import PropertyServices from "@/components/PropertyServices";
 import Process from "@/components/Process";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
@@ -16,6 +17,7 @@ export default function Home() {
         <Hero />
         <TrustStrip />
         <Services />
+        <PropertyServices />
         <Process />
         <Testimonials />
         <FAQ />
