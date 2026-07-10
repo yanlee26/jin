@@ -3,10 +3,13 @@
 import { useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import Logo from "./Logo";
+import LanguageToggle from "./LanguageToggle";
 import { siteConfig } from "@/lib/site-config";
+import { useLanguage } from "@/lib/i18n";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <header className="sticky top-0 z-50 bg-cream/90 backdrop-blur border-b border-charcoal/10">
@@ -22,7 +25,7 @@ export default function Header() {
               href={item.href}
               className="text-sm font-medium text-charcoal-soft hover:text-primary transition-colors"
             >
-              {item.label}
+              {t.nav[item.id]}
             </a>
           ))}
         </nav>
@@ -39,19 +42,23 @@ export default function Header() {
             href="#contact"
             className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
           >
-            Get a Free Quote
+            {t.header.quoteButton}
           </a>
+          <LanguageToggle />
         </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-charcoal"
-          aria-label="Toggle menu"
-          aria-expanded={open}
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageToggle />
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="inline-flex items-center justify-center rounded-md p-2 text-charcoal"
+            aria-label="Toggle menu"
+            aria-expanded={open}
+          >
+            {open ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {open && (
@@ -64,7 +71,7 @@ export default function Header() {
                 onClick={() => setOpen(false)}
                 className="rounded-md px-3 py-2 text-sm font-medium text-charcoal-soft hover:bg-cream-dark"
               >
-                {item.label}
+                {t.nav[item.id]}
               </a>
             ))}
             <a
@@ -80,7 +87,7 @@ export default function Header() {
               onClick={() => setOpen(false)}
               className="mt-2 rounded-full bg-primary px-4 py-2 text-center text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
             >
-              Get a Free Quote
+              {t.header.quoteButton}
             </a>
           </nav>
         </div>

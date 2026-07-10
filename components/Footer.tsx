@@ -1,7 +1,12 @@
+"use client";
+
 import Logo from "./Logo";
 import { siteConfig } from "@/lib/site-config";
+import { useLanguage } from "@/lib/i18n";
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="mt-auto border-t border-charcoal/10 bg-cream-dark/60">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10">
@@ -15,7 +20,7 @@ export default function Footer() {
                 href={item.href}
                 className="text-sm text-charcoal-soft hover:text-primary transition-colors"
               >
-                {item.label}
+                {t.nav[item.id]}
               </a>
             ))}
           </nav>
@@ -34,7 +39,7 @@ export default function Footer() {
         </div>
 
         <p className="mt-8 text-center text-xs text-charcoal-soft">
-          © {new Date().getFullYear()} {siteConfig.name}. Serving {siteConfig.areaServed}.
+          {t.footer.copyright(new Date().getFullYear(), siteConfig.name, t.common.areaServed)}
         </p>
       </div>
     </footer>

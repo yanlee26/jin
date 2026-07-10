@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
+import { LanguageProvider } from "@/lib/i18n";
+import { translations } from "@/lib/translations";
 
 const inter = Inter({
   variable: "--font-body",
@@ -15,8 +17,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} | Painters in ${siteConfig.areaServed}`,
-  description: siteConfig.description,
+  title: `${siteConfig.name} | Painters in ${translations.en.common.areaServed}`,
+  description: translations.en.hero.description,
 };
 
 export default function RootLayout({
@@ -29,7 +31,9 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${poppins.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-cream text-charcoal">{children}</body>
+      <body className="min-h-full flex flex-col bg-cream text-charcoal">
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   );
 }

@@ -1,20 +1,22 @@
+"use client";
+
 import { Building2, Fence, Home, PaintRoller, Sun } from "lucide-react";
-import { siteConfig } from "@/lib/site-config";
+import { useLanguage } from "@/lib/i18n";
 
 const icons = [PaintRoller, Sun, Home, Building2, Fence];
 
 export default function Services() {
+  const { t } = useLanguage();
+
   return (
     <section id="services" className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
       <div className="text-center max-w-2xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold text-charcoal">What we paint</h2>
-        <p className="mt-3 text-charcoal-soft">
-          From single rooms to full commercial fitouts, we cover every kind of painting job.
-        </p>
+        <h2 className="text-3xl sm:text-4xl font-bold text-charcoal">{t.services.heading}</h2>
+        <p className="mt-3 text-charcoal-soft">{t.services.subheading}</p>
       </div>
 
       <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {siteConfig.services.map((service, i) => {
+        {t.services.items.map((service, i) => {
           const Icon = icons[i];
           return (
             <div

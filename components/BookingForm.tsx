@@ -3,12 +3,14 @@
 import { FormEvent, useState } from "react";
 import { CheckCircle2, Mail, MapPin, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
+import { useLanguage } from "@/lib/i18n";
 
 type Errors = Partial<Record<"name" | "phone" | "email" | "suburb" | "service", string>>;
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function BookingForm() {
+  const { t } = useLanguage();
   const [errors, setErrors] = useState<Errors>({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -23,30 +25,31 @@ export default function BookingForm() {
     const service = String(form.get("service") ?? "").trim();
 
     const nextErrors: Errors = {};
-    if (!name) nextErrors.name = "Please enter your name.";
-    if (!phone) nextErrors.phone = "Please enter a phone number.";
+    if (!name) nextErrors.name = t.bookingForm.errors.name;
+    if (!phone) nextErrors.phone = t.bookingForm.errors.phone;
     if (!email) {
-      nextErrors.email = "Please enter your email.";
+      nextErrors.email = t.bookingForm.errors.email;
     } else if (!emailPattern.test(email)) {
-      nextErrors.email = "Please enter a valid email address.";
+      nextErrors.email = t.bookingForm.errors.emailInvalid;
     }
-    if (!suburb) nextErrors.suburb = "Please enter your suburb.";
-    if (!service) nextErrors.service = "Please choose a service.";
+    if (!suburb) nextErrors.suburb = t.bookingForm.errors.suburb;
+    if (!service) nextErrors.service = t.bookingForm.errors.service;
 
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length === 0) {
       const message = String(form.get("message") ?? "").trim();
-      const subject = `Free quote request — ${service}`;
+      const eb = t.bookingForm.emailBody;
+      const subject = `${t.bookingForm.subjectPrefix} — ${service}`;
       const body = [
-        `Name: ${name}`,
-        `Phone: ${phone}`,
-        `Email: ${email}`,
-        `Suburb: ${suburb}`,
-        `Service: ${service}`,
+        `${eb.nameLabel}: ${name}`,
+        `${eb.phoneLabel}: ${phone}`,
+        `${eb.emailLabel}: ${email}`,
+        `${eb.suburbLabel}: ${suburb}`,
+        `${eb.serviceLabel}: ${service}`,
         "",
-        "Project details:",
-        message || "(none provided)",
+        eb.detailsLabel,
+        message || eb.noneProvided,
       ].join("\n");
 
       window.location.href = `mailto:${siteConfig.email}?subject=${encodeURIComponent(
@@ -62,11 +65,10 @@ export default function BookingForm() {
     <section id="contact" className="mx-auto max-w-6xl px-4 sm:px-6 py-20">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-charcoal">Get a free quote</h2>
-          <p className="mt-3 text-charcoal-soft max-w-md">
-            Tell us a bit about your project and we&apos;ll get back to you with a free,
-            no-obligation quote.
-          </p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-charcoal">
+            {t.bookingForm.heading}
+          </h2>
+          <p className="mt-3 text-charcoal-soft max-w-md">{t.bookingForm.description}</p>
 
           <div className="mt-8 space-y-4">
             <a
@@ -91,7 +93,7 @@ export default function BookingForm() {
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
                 <MapPin size={18} />
               </span>
-              {siteConfig.areaServed}
+              {t.common.areaServed}
             </div>
           </div>
         </div>
@@ -100,25 +102,31 @@ export default function BookingForm() {
           {submitted ? (
             <div className="flex flex-col items-center justify-center text-center py-10">
               <CheckCircle2 size={40} className="text-primary" />
-              <h3 className="mt-4 text-lg font-semibold text-charcoal">Thanks — got it!</h3>
+              <h3 className="mt-4 text-lg font-semibold text-charcoal">
+                {t.bookingForm.success.title}
+              </h3>
               <p className="mt-2 text-sm text-charcoal-soft max-w-xs">
-                Your email app should now be open with your quote request ready to send to{" "}
-                {siteConfig.email}. Just hit send.
+                {t.bookingForm.success.description(siteConfig.email)}
               </p>
               <button
                 type="button"
                 onClick={() => setSubmitted(false)}
                 className="mt-6 text-sm font-semibold text-primary hover:text-primary-dark"
               >
-                Send another request
+                {t.bookingForm.success.sendAnother}
               </button>
             </div>
           ) : (
             <form noValidate onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Field label="Full name" name="name" error={errors.name} autoComplete="name" />
                 <Field
-                  label="Phone"
+                  label={t.bookingForm.fields.name}
+                  name="name"
+                  error={errors.name}
+                  autoComplete="name"
+                />
+                <Field
+                  label={t.bookingForm.fields.phone}
                   name="phone"
                   type="tel"
                   error={errors.phone}
@@ -127,18 +135,22 @@ export default function BookingForm() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field
-                  label="Email"
+                  label={t.bookingForm.fields.email}
                   name="email"
                   type="email"
                   error={errors.email}
                   autoComplete="email"
                 />
-                <Field label="Suburb" name="suburb" error={errors.suburb} />
+                <Field
+                  label={t.bookingForm.fields.suburb}
+                  name="suburb"
+                  error={errors.suburb}
+                />
               </div>
 
               <div>
                 <label htmlFor="service" className="block text-sm font-medium text-charcoal">
-                  Service needed
+                  {t.bookingForm.fields.service}
                 </label>
                 <select
                   id="service"
@@ -149,9 +161,9 @@ export default function BookingForm() {
                   }`}
                 >
                   <option value="" disabled>
-                    Select a service
+                    {t.bookingForm.selectPlaceholder}
                   </option>
-                  {siteConfig.serviceOptions.map((option) => (
+                  {t.bookingForm.serviceOptions.map((option) => (
                     <option key={option} value={option}>
                       {option}
                     </option>
@@ -164,14 +176,14 @@ export default function BookingForm() {
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-charcoal">
-                  Project details (optional)
+                  {t.bookingForm.fields.message}
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   rows={4}
                   className="mt-1 w-full rounded-lg border border-charcoal/20 bg-white px-3 py-2 text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-primary/40"
-                  placeholder="Tell us about your project..."
+                  placeholder={t.bookingForm.messagePlaceholder}
                 />
               </div>
 
@@ -179,7 +191,7 @@ export default function BookingForm() {
                 type="submit"
                 className="w-full rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
               >
-                Request my free quote
+                {t.bookingForm.submitButton}
               </button>
             </form>
           )}

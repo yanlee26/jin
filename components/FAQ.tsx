@@ -1,17 +1,19 @@
-import { siteConfig } from "@/lib/site-config";
+"use client";
+
+import { useLanguage } from "@/lib/i18n";
 
 export default function FAQ() {
+  const { t } = useLanguage();
+
   return (
     <section id="faq" className="bg-cream-dark/60 py-20">
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <div className="text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-charcoal">
-            Frequently asked questions
-          </h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-charcoal">{t.faq.heading}</h2>
         </div>
 
         <div className="mt-10 space-y-3">
-          {siteConfig.faqs.map((faq) => (
+          {t.faq.items.map((faq) => (
             <details
               key={faq.question}
               className="group rounded-xl border border-charcoal/10 bg-white p-4 open:shadow-sm"
