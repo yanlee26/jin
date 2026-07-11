@@ -29,6 +29,11 @@ html.dark {
   --color-charcoal-soft: #b7a99c;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-body), sans-serif;
 }

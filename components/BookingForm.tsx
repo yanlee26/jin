@@ -52,9 +52,12 @@ export default function BookingForm() {
         message || eb.noneProvided,
       ].join("\n");
 
-      window.location.href = `mailto:${siteConfig.email}?subject=${encodeURIComponent(
+      const mailtoUrl = `mailto:${siteConfig.email}?subject=${encodeURIComponent(
         subject
       )}&body=${encodeURIComponent(body)}`;
+      const link = document.createElement("a");
+      link.href = mailtoUrl;
+      link.click();
 
       setSubmitted(true);
       e.currentTarget.reset();
