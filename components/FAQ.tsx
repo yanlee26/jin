@@ -16,7 +16,7 @@ export default function FAQ() {
           {t.faq.items.map((faq) => (
             <details
               key={faq.question}
-              className="group rounded-xl border border-charcoal/10 bg-white p-4 open:shadow-sm"
+              className="group rounded-xl border border-charcoal/10 bg-surface p-4 open:shadow-sm"
             >
               <summary className="flex cursor-pointer list-none items-center justify-between font-semibold text-charcoal">
                 {faq.question}

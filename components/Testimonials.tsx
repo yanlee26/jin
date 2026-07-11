@@ -19,7 +19,7 @@ export default function Testimonials() {
         {t.testimonials.items.map((item, i) => (
           <blockquote
             key={i}
-            className="rounded-2xl border border-charcoal/10 bg-white p-6 shadow-sm"
+            className="rounded-2xl border border-charcoal/10 bg-surface p-6 shadow-sm"
           >
             <Quote size={22} className="text-primary/50" />
             <p className="mt-3 text-sm text-charcoal-soft">&ldquo;{item.quote}&rdquo;</p>

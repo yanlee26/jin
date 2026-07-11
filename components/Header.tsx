@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Menu, Phone, X } from "lucide-react";
 import Logo from "./Logo";
 import LanguageToggle from "./LanguageToggle";
+import ThemeToggle from "./ThemeToggle";
 import { siteConfig } from "@/lib/site-config";
 import { useLanguage } from "@/lib/i18n";
 
@@ -44,10 +45,12 @@ export default function Header() {
           >
             {t.header.quoteButton}
           </a>
+          <ThemeToggle />
           <LanguageToggle />
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
           <LanguageToggle />
           <button
             type="button"

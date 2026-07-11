@@ -21,7 +21,7 @@ export default function Services() {
           return (
             <div
               key={service.title}
-              className="rounded-2xl border border-charcoal/10 bg-white p-6 shadow-sm hover:shadow-md transition-shadow"
+              className="rounded-2xl border border-charcoal/10 bg-surface p-6 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="inline-flex items-center justify-center rounded-full bg-primary/10 p-3">
                 <Icon size={22} className="text-primary" />

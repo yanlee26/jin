@@ -98,7 +98,7 @@ export default function BookingForm() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-charcoal/10 bg-white p-6 sm:p-8 shadow-sm">
+        <div className="rounded-2xl border border-charcoal/10 bg-surface p-6 sm:p-8 shadow-sm">
           {submitted ? (
             <div className="flex flex-col items-center justify-center text-center py-10">
               <CheckCircle2 size={40} className="text-primary" />
@@ -156,7 +156,7 @@ export default function BookingForm() {
                   id="service"
                   name="service"
                   defaultValue=""
-                  className={`mt-1 w-full rounded-lg border bg-white px-3 py-2 text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+                  className={`mt-1 w-full rounded-lg border bg-surface px-3 py-2 text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-primary/40 ${
                     errors.service ? "border-red-400" : "border-charcoal/20"
                   }`}
                 >
@@ -182,7 +182,7 @@ export default function BookingForm() {
                   id="message"
                   name="message"
                   rows={4}
-                  className="mt-1 w-full rounded-lg border border-charcoal/20 bg-white px-3 py-2 text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  className="mt-1 w-full rounded-lg border border-charcoal/20 bg-surface px-3 py-2 text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder={t.bookingForm.messagePlaceholder}
                 />
               </div>
@@ -224,7 +224,7 @@ function Field({
         name={name}
         type={type}
         autoComplete={autoComplete}
-        className={`mt-1 w-full rounded-lg border bg-white px-3 py-2 text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-primary/40 ${
+        className={`mt-1 w-full rounded-lg border bg-surface px-3 py-2 text-sm text-charcoal focus:outline-none focus:ring-2 focus:ring-primary/40 ${
           error ? "border-red-400" : "border-charcoal/20"
         }`}
       />
