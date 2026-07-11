@@ -31,11 +31,22 @@ html.dark {
 
 html,
 body {
-  overflow-x: hidden;
+  /* clip (not hidden) avoids implicitly turning overflow-y to "auto",
+     which would break position: sticky on descendants like the header. */
+  overflow-x: clip;
 }
 
 body {
   font-family: var(--font-body), sans-serif;
+}
+
+/* iOS Safari auto-zooms the page when a focused field's font-size is
+   under 16px. Guard all form controls so tapping into the booking form
+   never leaves the viewport zoomed in. */
+input,
+select,
+textarea {
+  font-size: 16px;
 }
 
 h1,
