@@ -46,6 +46,17 @@ export type TranslationSet = {
   bookingForm: {
     heading: string;
     description: string;
+    contactMethod: {
+      label: string;
+      email: string;
+      sms: string;
+    };
+    scanToChat: {
+      heading: string;
+      wechat: string;
+      whatsapp: string;
+      caption: string;
+    };
     fields: {
       name: string;
       phone: string;
@@ -68,7 +79,7 @@ export type TranslationSet = {
     };
     success: {
       title: string;
-      description: (email: string) => string;
+      description: (method: "email" | "sms", target: string) => string;
       sendAnother: string;
     };
     subjectPrefix: string;
@@ -249,6 +260,17 @@ export const translations: Record<Locale, TranslationSet> = {
     bookingForm: {
       heading: "Book a Visit",
       description: "Tell us what's going on and we'll get someone out to sort it.",
+      contactMethod: {
+        label: "How should we get your request?",
+        email: "Email",
+        sms: "Text message",
+      },
+      scanToChat: {
+        heading: "Or scan to chat",
+        wechat: "WeChat",
+        whatsapp: "WhatsApp",
+        caption: "Scan to add",
+      },
       fields: {
         name: "Full name",
         phone: "Phone",
@@ -282,8 +304,10 @@ export const translations: Record<Locale, TranslationSet> = {
       },
       success: {
         title: "Thanks — got it!",
-        description: (email: string) =>
-          `Your email app should now be open with your request ready to send to ${email}. Just hit send.`,
+        description: (method: "email" | "sms", target: string) =>
+          method === "sms"
+            ? `Your messaging app should now be open with your text ready to send to ${target}. Just hit send.`
+            : `Your email app should now be open with your request ready to send to ${target}. Just hit send.`,
         sendAnother: "Send another request",
       },
       subjectPrefix: "Service request",
@@ -452,6 +476,17 @@ export const translations: Record<Locale, TranslationSet> = {
     bookingForm: {
       heading: "预约上门",
       description: "告诉我们出了什么问题，我们会尽快安排人手上门处理。",
+      contactMethod: {
+        label: "您希望我们通过哪种方式收到请求？",
+        email: "邮件",
+        sms: "短信",
+      },
+      scanToChat: {
+        heading: "或扫码添加",
+        wechat: "微信",
+        whatsapp: "WhatsApp",
+        caption: "扫码添加",
+      },
       fields: {
         name: "姓名",
         phone: "电话",
@@ -485,8 +520,10 @@ export const translations: Record<Locale, TranslationSet> = {
       },
       success: {
         title: "谢谢，已收到！",
-        description: (email: string) =>
-          `您的邮件应用应该已经打开，请求已准备好发送至 ${email}，点击发送即可。`,
+        description: (method: "email" | "sms", target: string) =>
+          method === "sms"
+            ? `您的短信应用应该已经打开，短信内容已准备好发送至 ${target}，点击发送即可。`
+            : `您的邮件应用应该已经打开，请求已准备好发送至 ${target}，点击发送即可。`,
         sendAnother: "再次提交请求",
       },
       subjectPrefix: "服务申请",

@@ -19,7 +19,7 @@ export default function Header() {
           <Logo />
         </a>
 
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden lg:flex items-center gap-6">
           {siteConfig.nav.map((item) => (
             <a
               key={item.href}
@@ -31,7 +31,7 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-4">
           <a
             href={siteConfig.phoneHref}
             className="flex items-center gap-2 text-sm font-medium text-charcoal-soft hover:text-primary transition-colors"
@@ -49,7 +49,7 @@ export default function Header() {
           <LanguageToggle />
         </div>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
           <ThemeToggle />
           <LanguageToggle />
           <button
@@ -65,7 +65,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-charcoal/10 bg-cream px-4 pb-4 pt-2">
+        <div className="lg:hidden border-t border-charcoal/10 bg-cream px-4 pb-4 pt-2">
           <nav className="flex flex-col gap-1">
             {siteConfig.nav.map((item) => (
               <a

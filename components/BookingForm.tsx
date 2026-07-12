@@ -1,16 +1,20 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { CheckCircle2, Mail, MapPin, Phone } from "lucide-react";
+import Image from "next/image";
+import { CheckCircle2, Mail, MapPin, MessageSquare, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/site-config";
 import { useLanguage } from "@/lib/i18n";
 
 type Errors = Partial<Record<"name" | "phone" | "email" | "suburb" | "service", string>>;
+type ContactMethod = "email" | "sms";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const rawPhone = siteConfig.phoneHref.replace(/^tel:/, "");
 
 export default function BookingForm() {
   const { t } = useLanguage();
+  const [method, setMethod] = useState<ContactMethod>("email");
   const [errors, setErrors] = useState<Errors>({});
   const [submitted, setSubmitted] = useState(false);
 
@@ -40,7 +44,6 @@ export default function BookingForm() {
     if (Object.keys(nextErrors).length === 0) {
       const message = String(form.get("message") ?? "").trim();
       const eb = t.bookingForm.emailBody;
-      const subject = `${t.bookingForm.subjectPrefix} — ${service}`;
       const body = [
         `${eb.nameLabel}: ${name}`,
         `${eb.phoneLabel}: ${phone}`,
@@ -52,11 +55,17 @@ export default function BookingForm() {
         message || eb.noneProvided,
       ].join("\n");
 
-      const mailtoUrl = `mailto:${siteConfig.email}?subject=${encodeURIComponent(
-        subject
-      )}&body=${encodeURIComponent(body)}`;
       const link = document.createElement("a");
-      link.href = mailtoUrl;
+      if (method === "sms") {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const separator = isIOS ? "&" : "?";
+        link.href = `sms:${rawPhone}${separator}body=${encodeURIComponent(body)}`;
+      } else {
+        const subject = `${t.bookingForm.subjectPrefix} — ${service}`;
+        link.href = `mailto:${siteConfig.email}?subject=${encodeURIComponent(
+          subject
+        )}&body=${encodeURIComponent(body)}`;
+      }
       link.click();
 
       setSubmitted(true);
@@ -99,6 +108,24 @@ export default function BookingForm() {
               {t.common.areaServed}
             </div>
           </div>
+
+          <div className="mt-10">
+            <p className="text-sm font-semibold text-charcoal">
+              {t.bookingForm.scanToChat.heading}
+            </p>
+            <div className="mt-4 flex gap-4">
+              <QrCard
+                src="/qr-wechat.png"
+                label={t.bookingForm.scanToChat.wechat}
+                caption={t.bookingForm.scanToChat.caption}
+              />
+              <QrCard
+                src="/qr-whatsapp.png"
+                label={t.bookingForm.scanToChat.whatsapp}
+                caption={t.bookingForm.scanToChat.caption}
+              />
+            </div>
+          </div>
         </div>
 
         <div className="rounded-2xl border border-charcoal/10 bg-surface p-6 sm:p-8 shadow-sm">
@@ -109,7 +136,10 @@ export default function BookingForm() {
                 {t.bookingForm.success.title}
               </h3>
               <p className="mt-2 text-sm text-charcoal-soft max-w-xs">
-                {t.bookingForm.success.description(siteConfig.email)}
+                {t.bookingForm.success.description(
+                  method,
+                  method === "sms" ? siteConfig.phone : siteConfig.email
+                )}
               </p>
               <button
                 type="button"
@@ -121,6 +151,38 @@ export default function BookingForm() {
             </div>
           ) : (
             <form noValidate onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <span className="block text-sm font-medium text-charcoal">
+                  {t.bookingForm.contactMethod.label}
+                </span>
+                <div className="mt-2 inline-flex rounded-full border border-charcoal/20 p-1">
+                  <button
+                    type="button"
+                    onClick={() => setMethod("email")}
+                    className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                      method === "email"
+                        ? "bg-primary text-white"
+                        : "text-charcoal-soft hover:text-primary"
+                    }`}
+                  >
+                    <Mail size={14} />
+                    {t.bookingForm.contactMethod.email}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setMethod("sms")}
+                    className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                      method === "sms"
+                        ? "bg-primary text-white"
+                        : "text-charcoal-soft hover:text-primary"
+                    }`}
+                  >
+                    <MessageSquare size={14} />
+                    {t.bookingForm.contactMethod.sms}
+                  </button>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Field
                   label={t.bookingForm.fields.name}
@@ -232,6 +294,29 @@ function Field({
         }`}
       />
       {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
+    </div>
+  );
+}
+
+function QrCard({ src, label, caption }: { src: string; label: string; caption: string }) {
+  return (
+    <div className="flex flex-col items-center gap-2 text-center">
+      {/* Intentionally bg-white (not bg-surface) — QR codes must stay
+          black-on-white in dark mode too, or they stop scanning. */}
+      <div className="rounded-xl border border-charcoal/10 bg-white p-2 shadow-sm">
+        <Image
+          src={src}
+          alt={`${label} QR code`}
+          width={112}
+          height={112}
+          priority
+          className="h-28 w-28 rounded-lg object-cover"
+        />
+      </div>
+      <div>
+        <p className="text-sm font-semibold text-charcoal">{label}</p>
+        <p className="text-xs text-charcoal-soft">{caption}</p>
+      </div>
     </div>
   );
 }
