@@ -18,7 +18,9 @@
       "Bash(curl -s -o /tmp/test-wechat-256.png \"http://localhost:3000/_next/image?url=%2Fqr-wechat.png&w=256&q=75\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 5 http://localhost:3000)",
       "Bash(grep -n \"priority\\\\|Image$\\\\|src={src}\" /Users/xiaoboniu/Documents/me/jin/components/BookingForm.tsx)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(node verify-navspy.js)",
+      "Bash(node /Users/xiaoboniu/Documents/me/jin/verify-navspy.js)"
     ],
     "additionalDirectories": [
       "/tmp"
