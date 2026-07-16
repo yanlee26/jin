@@ -39,15 +39,15 @@ export default function BeforeAfterGallery() {
     // finished loading, so this off-screen carousel doesn't compete with
     // the initial page load — then fetch them all so the gallery is ready
     // to show instantly once the user scrolls or navigates to it.
+    function markReady() {
+      setEagerLoad(true);
+    }
     if (document.readyState === "complete") {
-      setEagerLoad(true);
-      return;
+      const id = setTimeout(markReady, 0);
+      return () => clearTimeout(id);
     }
-    function onLoad() {
-      setEagerLoad(true);
-    }
-    window.addEventListener("load", onLoad);
-    return () => window.removeEventListener("load", onLoad);
+    window.addEventListener("load", markReady);
+    return () => window.removeEventListener("load", markReady);
   }, []);
 
   useEffect(() => {
@@ -140,7 +140,7 @@ export default function BeforeAfterGallery() {
                         src={pair.before}
                         alt={`${t.ourWork.before} ${i + 1}`}
                         fill
-                        loading="lazy"
+                        loading={eagerLoad ? "eager" : "lazy"}
                         sizes="(min-width: 640px) 45vw, 90vw"
                         className="object-cover"
                       />
@@ -160,7 +160,7 @@ export default function BeforeAfterGallery() {
                         src={pair.after}
                         alt={`${t.ourWork.after} ${i + 1}`}
                         fill
-                        loading="lazy"
+                        loading={eagerLoad ? "eager" : "lazy"}
                         sizes="(min-width: 640px) 45vw, 90vw"
                         className="object-cover"
                       />
