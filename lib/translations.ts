@@ -221,7 +221,7 @@ export const translations: Record<Locale, TranslationSet> = {
       subheading: "A few recent jobs — see the difference for yourself.",
       before: "Before",
       after: "After",
-      prev: "Previous",
+      prev: "Prev",
       next: "Next",
     },
     testimonials: {

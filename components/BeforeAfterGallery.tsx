@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
@@ -25,12 +26,38 @@ export default function BeforeAfterGallery() {
   const settleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [zoomed, setZoomed] = useState<{ src: string; alt: string } | null>(null);
+  const [eagerLoad, setEagerLoad] = useState(false);
 
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
     el.scrollTo({ left: el.clientWidth, behavior: "auto" });
   }, []);
+
+  useEffect(() => {
+    // Defer loading every slide's images until the rest of the page has
+    // finished loading, so this off-screen carousel doesn't compete with
+    // the initial page load — then fetch them all so the gallery is ready
+    // to show instantly once the user scrolls or navigates to it.
+    if (document.readyState === "complete") {
+      setEagerLoad(true);
+      return;
+    }
+    function onLoad() {
+      setEagerLoad(true);
+    }
+    window.addEventListener("load", onLoad);
+    return () => window.removeEventListener("load", onLoad);
+  }, []);
+
+  useEffect(() => {
+    if (!zoomed) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [zoomed]);
 
   useEffect(() => {
     if (!zoomed) return;
@@ -199,33 +226,36 @@ export default function BeforeAfterGallery() {
         </div>
       </section>
 
-      {zoomed && (
-        <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-charcoal/90 p-4 sm:p-10"
-          onClick={() => setZoomed(null)}
-        >
-          <button
-            type="button"
-            onClick={() => setZoomed(null)}
-            aria-label="Close"
-            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-cream/10 text-cream hover:bg-cream/20 transition-colors"
-          >
-            <X size={22} />
-          </button>
+      {zoomed &&
+        typeof document !== "undefined" &&
+        createPortal(
           <div
-            className="relative h-full w-full max-w-4xl"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-charcoal/90 p-4 sm:p-10"
+            onClick={() => setZoomed(null)}
           >
-            <Image
-              src={zoomed.src}
-              alt={zoomed.alt}
-              fill
-              sizes="100vw"
-              className="object-contain"
-            />
-          </div>
-        </div>
-      )}
+            <button
+              type="button"
+              onClick={() => setZoomed(null)}
+              aria-label="Close"
+              className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-cream/10 text-cream hover:bg-cream/20 transition-colors"
+            >
+              <X size={22} />
+            </button>
+            <div
+              className="relative h-full w-full max-w-4xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={zoomed.src}
+                alt={zoomed.alt}
+                fill
+                sizes="100vw"
+                className="object-contain"
+              />
+            </div>
+          </div>,
+          document.body
+        )}
     </>
   );
 }
