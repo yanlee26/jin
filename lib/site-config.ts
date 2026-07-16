@@ -9,6 +9,7 @@ export const siteConfig = {
     { id: "services", href: "#services" },
     { id: "propertyServices", href: "#property-services" },
     { id: "process", href: "#process" },
+    { id: "ourWork", href: "#our-work" },
     { id: "testimonials", href: "#testimonials" },
     { id: "faq", href: "#faq" },
     { id: "contact", href: "#contact" },

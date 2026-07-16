@@ -2,7 +2,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export default function Logo({ className = "" }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2 ${className}`}>
+    <span className={`inline-flex shrink-0 items-center gap-2 ${className}`}>
       <svg
         width="36"
         height="36"
@@ -17,7 +17,7 @@ export default function Logo({ className = "" }: { className?: string }) {
           fill="var(--color-cream)"
         />
       </svg>
-      <span className="font-heading font-semibold text-lg leading-tight text-charcoal">
+      <span className="font-heading font-semibold text-lg leading-tight text-charcoal whitespace-nowrap">
         {siteConfig.shortName}
       </span>
     </span>

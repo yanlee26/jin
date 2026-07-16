@@ -4,6 +4,7 @@ import TrustStrip from "@/components/TrustStrip";
 import Services from "@/components/Services";
 import PropertyServices from "@/components/PropertyServices";
 import Process from "@/components/Process";
+import BeforeAfterGallery from "@/components/BeforeAfterGallery";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import BookingForm from "@/components/BookingForm";
@@ -19,6 +20,7 @@ export default function Home() {
         <Services />
         <PropertyServices />
         <Process />
+        <BeforeAfterGallery />
         <Testimonials />
         <FAQ />
         <BookingForm />

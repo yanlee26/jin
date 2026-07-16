@@ -49,19 +49,19 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-cream/90 backdrop-blur border-b border-charcoal/10">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 flex items-center justify-between h-16">
-        <a href="#top" className="flex items-center">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 flex items-center justify-between gap-4 h-16">
+        <a href="#top" className="flex shrink-0 items-center">
           <Logo />
         </a>
 
-        <nav className="hidden lg:flex items-center gap-6">
+        <nav className="hidden xl:flex shrink-0 items-center gap-5">
           {siteConfig.nav.map((item) => {
             const isActive = activeId === item.href.replace("#", "");
             return (
               <a
                 key={item.href}
                 href={item.href}
-                className={`text-sm transition-colors ${
+                className={`whitespace-nowrap text-sm transition-colors ${
                   isActive
                     ? "font-semibold text-primary"
                     : "font-medium text-charcoal-soft hover:text-primary"
@@ -73,17 +73,17 @@ export default function Header() {
           })}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-4">
+        <div className="hidden xl:flex shrink-0 items-center gap-4">
           <a
             href={siteConfig.phoneHref}
-            className="flex items-center gap-2 text-sm font-medium text-charcoal-soft hover:text-primary transition-colors"
+            className="flex items-center gap-2 whitespace-nowrap text-sm font-medium text-charcoal-soft hover:text-primary transition-colors"
           >
-            <Phone size={16} />
+            <Phone size={16} className="shrink-0" />
             {siteConfig.phone}
           </a>
           <a
             href="#contact"
-            className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
+            className="whitespace-nowrap rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark transition-colors"
           >
             {t.header.quoteButton}
           </a>
@@ -91,7 +91,7 @@ export default function Header() {
           <LanguageToggle />
         </div>
 
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="flex items-center gap-2 xl:hidden">
           <ThemeToggle />
           <LanguageToggle />
           <button
@@ -107,7 +107,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-charcoal/10 bg-cream px-4 pb-4 pt-2">
+        <div className="xl:hidden border-t border-charcoal/10 bg-cream px-4 pb-4 pt-2">
           <nav className="flex flex-col gap-1">
             {siteConfig.nav.map((item) => {
               const isActive = activeId === item.href.replace("#", "");

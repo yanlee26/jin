@@ -1,27 +1,16 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(node -e ' *)",
-      "Bash(cd /Users/xiaoboniu/Documents/me/jin *)",
-      "Bash(sips -g pixelWidth -g pixelHeight assets/wechat.jpg)",
-      "Bash(sips -g pixelWidth -g pixelHeight assets/whasApp.jpg)",
-      "Bash(python3 -c \"from PIL import Image; print\\('PIL available'\\)\")",
-      "Bash(python3 -m pip --version)",
-      "Bash(python3 -m pip install --user --quiet Pillow)",
-      "Bash(python3 /tmp/crop_qr.py)",
-      "Bash(grep -n \"emailBody: {$\" /Users/xiaoboniu/Documents/me/jin/lib/translations.ts)",
-      "Bash(node verify-qr.js)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/_next/image?url=%2Fqr-wechat.png&w=128&q=75\")",
-      "Bash(curl -s \"http://localhost:3000/_next/image?url=%2Fqr-wechat.png&w=128&q=75\")",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/qr-wechat.png\")",
-      "Bash(curl -s -o /dev/null -w \"%{http_code} %{time_total}s\\\\n\" \"http://localhost:3000/_next/image?url=%2Fqr-wechat.png&w=256&q=75\")",
-      "Bash(curl -s -o /tmp/test-wechat-256.png \"http://localhost:3000/_next/image?url=%2Fqr-wechat.png&w=256&q=75\")",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" --max-time 5 http://localhost:3000)",
-      "Bash(grep -n \"priority\\\\|Image$\\\\|src={src}\" /Users/xiaoboniu/Documents/me/jin/components/BookingForm.tsx)",
-      "Bash(python3 -c ' *)",
-      "Bash(node verify-navspy.js)",
-      "Bash(node /Users/xiaoboniu/Documents/me/jin/verify-navspy.js)"
+  "allow": [
+      "Edit",
+      "Bash(npm run *)",
+      "Bash(git commit *)",
+      "Bash(mkdir *)"
     ],
+    "deny": [
+      "Read(./.env)"
+    ],
+    "ask": ["Bash(rm *)", "Bash(mv *)"],
+    "defaultMode": "acceptEdits",
     "additionalDirectories": [
       "/tmp"
     ]

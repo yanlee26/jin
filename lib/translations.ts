@@ -5,6 +5,7 @@ export type TranslationSet = {
     services: string;
     propertyServices: string;
     process: string;
+    ourWork: string;
     testimonials: string;
     faq: string;
     contact: string;
@@ -33,6 +34,14 @@ export type TranslationSet = {
     heading: string;
     subheading: string;
     steps: { title: string; description: string }[];
+  };
+  ourWork: {
+    heading: string;
+    subheading: string;
+    before: string;
+    after: string;
+    prev: string;
+    next: string;
   };
   testimonials: {
     heading: string;
@@ -102,6 +111,7 @@ export const translations: Record<Locale, TranslationSet> = {
       services: "Services",
       propertyServices: "Property Services",
       process: "Process",
+      ourWork: "Our Work",
       testimonials: "Testimonials",
       faq: "FAQ",
       contact: "Contact",
@@ -205,6 +215,14 @@ export const translations: Record<Locale, TranslationSet> = {
           description: "We walk through the finished job together to make sure you're happy.",
         },
       ],
+    },
+    ourWork: {
+      heading: "Our Work",
+      subheading: "A few recent jobs — see the difference for yourself.",
+      before: "Before",
+      after: "After",
+      prev: "Previous",
+      next: "Next",
     },
     testimonials: {
       heading: "What customers say",
@@ -330,6 +348,7 @@ export const translations: Record<Locale, TranslationSet> = {
       services: "服务项目",
       propertyServices: "物业服务",
       process: "服务流程",
+      ourWork: "施工案例",
       testimonials: "客户评价",
       faq: "常见问题",
       contact: "联系我们",
@@ -425,6 +444,14 @@ export const translations: Record<Locale, TranslationSet> = {
           description: "我们会与您一起验收完工项目，确保您满意。",
         },
       ],
+    },
+    ourWork: {
+      heading: "施工案例",
+      subheading: "近期完成的部分项目 — 效果一目了然。",
+      before: "施工前",
+      after: "施工后",
+      prev: "上一张",
+      next: "下一张",
     },
     testimonials: {
       heading: "客户评价",
